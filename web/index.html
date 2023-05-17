@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+      If you are serving your web app in a path other than the root, change the
+      href value below to reflect the base path you are serving from.
+
+      The path provided below has to start and end with a slash "/" in order for
+      it to work correctly.
+
+      For more details:
+      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+      This is a placeholder for base href that will be replaced by the value of
+      the `--base-href` argument provided to `flutter build`.
+    -->
+    <base href="$FLUTTER_BASE_HREF">
+
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="RockPaperScissors">
+
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="RockPaperScissors">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
+
+    <title>RockPaperScissor</title>
+    <link rel="manifest" href="manifest.json">
+
+
+    <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = null;
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    <!-- This script adds the flutter initialization JS code -->
+    <script src="flutter.js" defer></script>
+    <!--    <script type="application/javascript">-->
+
+    <!--    Element.prototype._attachShadow = Element.prototype.attachShadow;-->
+    <!--    Element.prototype.attachShadow = function (init) {-->
+
+    <!--      if (this.tagName == "FLT-GLASS-PANE") {-->
+    <!--        console.log(window.location.href);-->
+    <!--        _element = document.createElement('flt-element-host-node');-->
+    <!--        this.appendChild(_element);-->
+
+    <!--        return _element;-->
+    <!--      }-->
+
+    <!--      return this._attachShadow(init);-->
+    <!--    };-->
+
+    <!--  </script>-->
+
+
+    <style>
+    @font-face {
+      font-family: 'Vazir';
+      src: url(/assets/fonts/vazir/vazirmatn_rd_regular.ttf) format('ttf');
+    }
+    :root{color-scheme: light dark;}
+    .container {
+      flex-direction: column;
+      text-align: center;
+    }
+    .logo{
+      width: 25vh;
+      padding-bottom: 5vh;
+    }
+    .indicator {
+      width: 10vh;
+    }
+    .indicator-text {
+      direction: rtl;
+      font-size: 2vh;
+      font-family: 'Vazir';
+      margin: 0.5vh 0.5vw;
+    }
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: #FFFBFE;
+      }
+      .indicator-text.light-scheme {
+        color: black;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #1C1B1F;
+      }
+      .indicator-text.dark-scheme {
+        color: white;
+      }
+    }
+
+    body {
+      inset: 0; overflow: hidden;
+      margin: 0; padding: 0;
+      position: fixed;
+    }
+    #loading_indicator {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      width: 100%;
+    }
+    #loading_indicator picture {
+      animation: 1s ease-in-out 0s infinite alternate breathe;
+      opacity: .88;
+      transition: opacity .4s;
+    }
+    #loading_indicator.main_done picture {
+      opacity: 1;
+    }
+    #loading_indicator.init_done picture {
+      animation: .33s ease-in-out 0s 1 forwards zoom;
+      opacity: .05;
+    }
+    @keyframes breathe { from { transform: scale(1) } to { transform: scale(0.95)}}
+    @keyframes zoom { from { transform: scale(1) } to { transform: scale(10)}}
+
+*, ::after, ::before { -webkit-box-sizing: border-box; box-sizing: border-box; }
+.loader-1 {
+	height: 32px;
+	width: 32px;
+	-webkit-animation: loader-1-1 4.8s linear infinite;
+	        animation: loader-1-1 4.8s linear infinite;
+}
+@-webkit-keyframes loader-1-1 {
+	0%   { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes loader-1-1 {
+	0%   { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+.loader-1 span {
+	display: block;
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+	margin: auto;
+	height: 32px;
+	width: 32px;
+	clip: rect(0, 32px, 32px, 16px);
+	-webkit-animation: loader-1-2 1.2s linear infinite;
+	        animation: loader-1-2 1.2s linear infinite;
+}
+@-webkit-keyframes loader-1-2 {
+	0%   { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(220deg); }
+}
+@keyframes loader-1-2 {
+	0%   { transform: rotate(0deg); }
+	100% { transform: rotate(220deg); }
+}
+.loader-1 span::after {
+	content: "";
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+	margin: auto;
+	height: 32px;
+	width: 32px;
+	clip: rect(0, 32px, 32px, 16px);
+	border: 3px solid #0061A6;
+	border-radius: 50%;
+	-webkit-animation: loader-1-3 1.2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+	        animation: loader-1-3 1.2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+}
+@-webkit-keyframes loader-1-3 {
+	0%   { -webkit-transform: rotate(-140deg); }
+	50%  { -webkit-transform: rotate(-160deg); }
+	100% { -webkit-transform: rotate(140deg); }
+}
+@keyframes loader-1-3 {
+	0%   { transform: rotate(-140deg); }
+	50%  { transform: rotate(-160deg); }
+	100% { transform: rotate(140deg); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+
+</head>
+<body>
+
+<div id="loading_indicator" class="container">
+    <img src="./assets/assets/images/splash_image.gif"/>
+</div>
+
+<script>
+    window.addEventListener('load', function() {
+      var loading = document.querySelector('#loading_indicator');
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function(engineInitializer) {
+        loading.classList.add('main_done');
+        return engineInitializer.initializeEngine();
+      }).then(function(appRunner) {
+        loading.classList.add('init_done');
+        return appRunner.runApp();
+      }).then(function(app) {
+        window.setTimeout(function() {
+          document.querySelector('#loading_indicator').remove();
+        }, 200);
+      });
+    });
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

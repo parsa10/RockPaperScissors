@@ -1,0 +1,13 @@
+name: hive_database_repository
+description: A hive database repository for reading from and writing to storage.
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  hive_flutter: ^1.1.0
+
+dev_dependencies:
+  hive_generator: ^1.1.3
+  build_runner: ^2.1.11
