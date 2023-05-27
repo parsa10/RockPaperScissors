@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:rock_paper_scissors/app.dart';
-import 'game_items.dart';
+
+import 'game.dart';
 
 class TheGame extends StatefulWidget {
   const TheGame({Key? key}) : super(key: key);
@@ -23,8 +24,25 @@ class _TheGameState extends State<TheGame> {
   @override
   void initState() {
     super.initState();
+
     // Execute code after the frame is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      gameItems = [
+        const Rock(position: Offset(50, 50)),
+        const Paper(position: Offset(150, 150)),
+        const Scissor(position: Offset(250, 250)),
+      ];
+      velocities = [
+        const Offset(1, 1),
+        const Offset(-1, 1),
+        const Offset(-1, -1),
+      ];
+      positions = [
+        const Offset(50, 50),
+        const Offset(150, 150),
+        const Offset(250, 250),
+      ];
+      widgets = [];
       _updateSize();
       _createGameItems();
       _createWidgets();
@@ -93,19 +111,16 @@ class _TheGameState extends State<TheGame> {
   // Create the widget for each game item
   void _createWidgets() {
     for (int i = 0; i < gameItems.length; i++) {
-      Widget widget = Positioned(
-        left: positions[i].dx,
-        top: positions[i].dy,
-        child: gameItems[i],
-      );
-      widgets.add(widget);
+      widgets.add(gameItems[i].buildDraggable(context, gameItems[i], gameItems,
+          velocities, positions[i], positions));
     }
   }
 
   // Update the positions of the game items
   void _updatePositions() {
     for (int i = 0; i < gameItems.length; i++) {
-      positions[i] += velocities[i] * 5;
+      positions[i] +=
+          velocities[i] * 5; // Multiply by a factor to control speed
 
       if (positions[i].dx < 0 ||
           positions[i].dx + gameItems[i].size > _maxWidth) {
@@ -118,11 +133,8 @@ class _TheGameState extends State<TheGame> {
 
       gameItems[i] = gameItems[i].copyWith(position: positions[i]);
 
-      widgets[i] = Positioned(
-        left: positions[i].dx,
-        top: positions[i].dy,
-        child: gameItems[i],
-      );
+      widgets[i] = gameItems[i].buildDraggable(context, gameItems[i], gameItems,
+          velocities, positions[i], positions);
     }
   }
 

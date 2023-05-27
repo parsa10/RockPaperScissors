@@ -11,6 +11,20 @@ abstract class GameItem extends StatelessWidget {
   GameItem copyWith({required Offset position});
 
   double get size;
+
+  Widget buildDraggable(
+    BuildContext context,
+    GameItem gameItem,
+    List<GameItem> gameItems,
+    List<Offset> velocities,
+    Offset initialPosition,
+    List<Offset> positions,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return buildDraggable(context, this, [], [], Offset.zero, []);
+  }
 }
 
 // Subclass which represents the rock item
@@ -34,6 +48,39 @@ class Rock extends GameItem {
 
   @override
   double get size => 25;
+
+  @override
+  Widget buildDraggable(
+    BuildContext context,
+    GameItem gameItem,
+    List<GameItem> gameItems,
+    List<Offset> velocities,
+    Offset initialPosition,
+    List<Offset> positions,
+  ) {
+    return Positioned(
+      left: position.dx,
+      top: position.dy,
+      child: Draggable<GameItem>(
+        feedback: gameItem.build(context),
+        childWhenDragging: Container(),
+        onDragEnd: (details) {
+          // Calculate the direction the user dragged the game item in
+          Offset dragDirection = details.offset - initialPosition;
+
+          // Set the velocity to the drag direction with the same speed as before
+          velocities[gameItems.indexOf(this)] = dragDirection /
+              dragDirection.distance *
+              velocities[gameItems.indexOf(this)].distance *
+              7;
+
+          // Update the position of the game item to the release position
+          positions[gameItems.indexOf(this)] = details.offset;
+        },
+        child: gameItem.build(context),
+      ),
+    );
+  }
 }
 
 // Subclass which represents the paper item
@@ -57,6 +104,39 @@ class Paper extends GameItem {
 
   @override
   double get size => 25;
+
+  @override
+  Widget buildDraggable(
+    BuildContext context,
+    GameItem gameItem,
+    List<GameItem> gameItems,
+    List<Offset> velocities,
+    Offset initialPosition,
+    List<Offset> positions,
+  ) {
+    return Positioned(
+      left: position.dx,
+      top: position.dy,
+      child: Draggable<GameItem>(
+        feedback: gameItem.build(context),
+        childWhenDragging: Container(),
+        onDragEnd: (details) {
+          // Calculate the direction the user dragged the game item in
+          Offset dragDirection = details.offset - initialPosition;
+
+          // Set the velocity to the drag direction with the same speed as before
+          velocities[gameItems.indexOf(this)] = dragDirection /
+              dragDirection.distance *
+              velocities[gameItems.indexOf(this)].distance *
+              7;
+
+          // Update the position of the game item to the release position
+          positions[gameItems.indexOf(this)] = details.offset;
+        },
+        child: gameItem.build(context),
+      ),
+    );
+  }
 }
 
 // Subclass which represents the scissor item
@@ -80,4 +160,37 @@ class Scissor extends GameItem {
 
   @override
   double get size => 25;
+
+  @override
+  Widget buildDraggable(
+    BuildContext context,
+    GameItem gameItem,
+    List<GameItem> gameItems,
+    List<Offset> velocities,
+    Offset initialPosition,
+    List<Offset> positions,
+  ) {
+    return Positioned(
+      left: position.dx,
+      top: position.dy,
+      child: Draggable<GameItem>(
+        feedback: gameItem.build(context),
+        childWhenDragging: Container(),
+        onDragEnd: (details) {
+          // Calculate the direction the user dragged the game item in
+          Offset dragDirection = details.offset - initialPosition;
+
+          // Set the velocity to the drag direction with the same speed as before
+          velocities[gameItems.indexOf(this)] = dragDirection /
+              dragDirection.distance *
+              velocities[gameItems.indexOf(this)].distance *
+              7;
+
+          // Update the position of the game item to the release position
+          positions[gameItems.indexOf(this)] = details.offset;
+        },
+        child: gameItem.build(context),
+      ),
+    );
+  }
 }
